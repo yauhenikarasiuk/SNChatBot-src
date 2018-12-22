@@ -1,0 +1,18 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Launch Program",
+            "program": "${workspaceFolder}\\index.js",
+            "env": {
+                "sn_client_id": "476cfd4877626300f4f91034181efac8",
+                "sn_secret_key": "ac0dd3408c1031006907010c2cc6ef61"
+            }
+        }
+    ]
+}

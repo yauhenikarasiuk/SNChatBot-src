@@ -52,7 +52,7 @@ bot.setMBFAdapter(adapter);
 
 // Create HTTP server
 let server = restify.createServer();
-server.listen(process.env.port || process.env.PORT || 3978, function () {
+server.listen(process.env.port || process.env.PORT || 3978, function() {
     console.log(`\n${ server.name } listening to ${ server.url }`);
     console.log(`\nGet Bot Framework Emulator: https://aka.ms/botframework-emulator`);
     console.log(`\nTo talk to your bot, open echoBot-with-counter.bot file in the Emulator`);
@@ -91,6 +91,9 @@ cometd.handshake(function(h) {
             });
             cometd.subscribe('/connect/message/e6b09fb4db3bd30082e2f78eaf9619ed', function(m) {
                 bot.AMBReceived(m);
+            });
+            cometd.subscribe('/rw/default/provider_user_map/cHJvdmlkZXJfYXV0aD05MTM1NzM0ZGRiMjIyNzAwYjgxZTQzNDIzOTk2MTkxYQ--', function(m) {
+                bot.assignAuth(m);
             });
         };
         xhr.send('user_name=yauheni_karasiuk%40epam.com&user_password=49Banimu&sys_action=sysverb_login');

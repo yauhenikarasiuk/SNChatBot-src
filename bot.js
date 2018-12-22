@@ -10,6 +10,7 @@ const {
 const {
     ChatSession
 } = require('./ChatSession');
+const request = require('request');
 // Turn counter property
 const TURN_COUNTER_PROPERTY = 'turnCounterProperty';
 const USER_PROFILE_PROPERTY = 'userProfile';
@@ -45,7 +46,15 @@ class SNBot {
         if (!session) {
             session = new ChatSession(context);
         }
+        this.sessions.push(session);
         return session;
+    }
+    assignAuth(message) {
+        this.sessions.forEach(element => {
+            if (element.user_id === message.data.record.provider_user_id.value) {
+                element.processAuth(message);
+            }
+        });
     }
     setMBFAdapter(adapter) {
         this.adapter = adapter;
@@ -58,15 +67,15 @@ class SNBot {
         });
     }
     async onTurn(turnContext) {
-        var session = this.getSession(turnContext);
         switch (turnContext.activity.type) {
-            case ActivityTypes.Message:
-                await turnContext.sendActivity(`You said "${ turnContext.activity.text }"`);
-                break;
-            case ActivityTypes.ConversationUpdate:
-                await turnContext.sendActivity(`[${ turnContext.activity.type } event detected]`);
-                this.references.push(TurnContext.getConversationReference(turnContext.activity));
-                break;
+        case ActivityTypes.Message:
+            var session = this.getSession(turnContext);
+            await turnContext.sendActivity(`You said "${ turnContext.activity.text }"`);
+            break;
+        case ActivityTypes.ConversationUpdate:
+            await turnContext.sendActivity(`[${ turnContext.activity.type } event detected]`);
+            this.references.push(TurnContext.getConversationReference(turnContext.activity));
+            break;
         }
         // Save state changes
         await this.conversationState.saveChanges(turnContext);

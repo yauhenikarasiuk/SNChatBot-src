@@ -11,7 +11,8 @@
             "program": "${workspaceFolder}\\index.js",
             "env": {
                 "sn_client_id": "476cfd4877626300f4f91034181efac8",
-                "sn_secret_key": "ac0dd3408c1031006907010c2cc6ef61"
+                "sn_secret_key": "ac0dd3408c1031006907010c2cc6ef61",
+                "bot_auth": "Basic eWF1aGVuaV9rYXJhc2l1a0BlcGFtLmNvbTo0OUJhbmltdQ=="
             }
         }
     ]

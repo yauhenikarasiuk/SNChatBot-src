@@ -29,16 +29,24 @@ class ChatSession {
     constructor(context) {
         this.user_id = context.activity.from.id;
         this.botReference = TurnContext.getConversationReference(context.activity);
-        this.auth = this.getAuth(context);
-    }
-    getAuth(context) {
         context.sendActivity(authorizationUri);
+    }
+    processAuthResponse(message) {
+        
+        request.get({
+            url: 'https://petrofacdev.service-now.com/api/now/connect/support/queues/f4d701b1b3900300f7d1a13816a8dc8e/sessions',
+            headers: {
+                Authorization: process.env.bot_auth
+            }
+        }, function(response) {
+            console.log(response);
+        });
     }
     getChat(context) {
         request.get({
             url: 'https://petrofacdev.service-now.com/api/now/connect/support/queues/f4d701b1b3900300f7d1a13816a8dc8e/sessions',
             headers: {
-                Authorization: 'Basic eWF1aGVuaV9rYXJhc2l1a0BlcGFtLmNvbTo0OUJhbmltdQ=='
+                Authorization: process.env.bot_auth
             }
         }, function(response) {
             console.log(response);
